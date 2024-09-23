@@ -1,0 +1,20 @@
+name: Python application
+
+on:
+  push:
+   branches: [ master ]
+  pull_request:
+    branches: [ master ]
+      
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build & Push Image
+      run: |
+        echo "${{ secrets.DOCKERPW }}" | docker login -u "goranpopov322" --password-stdin
+        docker image build -t goranpopov322/carsApp:latest .
+        docker push goranpopov322/carsApp:latest
